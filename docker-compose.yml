@@ -1,0 +1,21 @@
+version: '3'
+services:
+  # Flask web application service
+  web:
+    build: ./app  # Path to your Flask application code
+      # dockerfile: Dockerfile
+    ports:
+      - "3000:3000"  # Map host port to container port
+    depends_on:
+      - mysql  # This service depends on the MySQL database service
+
+  mysql:
+    build: ./db
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: 'bird_classification'
+      MYSQL_ROOT_PASSWORD: 'root'
+    # volumes:
+    #   - ./db:/docker-entrypoint-initdb.d/:ro
